@@ -1,0 +1,499 @@
+TP1 :
+#include <iostream>
+
+// function to handle integer IP address
+void routePacket(int ipAddress) {
+    std::cout << "Routing packet to IP (int): " << ipAddress << std::endl;
+    // Assuming that we can seperate networks with integer idAdresses 
+    if (ipAddress > 1000 && ipAddress < 2000) {
+        std::cout << "  -> Forwarding to network A" << std::endl;
+    } else if (ipAddress >= 2000 && ipAddress < 3000) {
+        std::cout << "  -> Forwarding to network B" << std::endl;
+    } else {
+        std::cout << "  -> Forwarding to default gateway" << std::endl;
+    }
+}
+// function to handle string IP address
+void routePacket(const std::string& ipAddress) {
+    std::cout << "Routing packet to IP (string) : " << std::endl ;
+    // Simulating routing logic
+    if(ipAddress.substr(0,3) == "192"){
+        std::cout << "  -> Forwarding to the local network " << std::endl;
+    }else if (ipAddress.substr(0,3) == "10."){
+        std::cout << "  -> Forwarding to private network " << std::endl;
+    }else {
+        std::cout << "  -> Forwarding to the internet " << std::endl;
+    }
+    
+}
+
+// function to handle source and destination IP addresses
+void routePacket(const std::string& sourceIp, const std::string& destinationIp) {
+    std::cout << "Routing packet from " << sourceIp << " to " << destinationIp << std::endl;
+    // Simulate routing logic based on source and destination IPs
+    if (sourceIp.substr(0, 3) == "192" && destinationIp.substr(0, 3) == "192") {
+        std::cout << "  -> Routing within local network" << std::endl;
+    } else if (destinationIp.substr(0, 3) == "10.") {
+        std::cout << "  -> Routing to private network" << std::endl;
+    } else {
+        std::cout << "  -> Routing to external network" << std::endl;
+    }
+}
+
+// function handle source IP, destination IP, and protocol
+void routePacket(const std::string& sourceIp, const std::string& destinationIp, const std::string& protocol) {
+    std::cout << "Routing packet from " << sourceIp << " to " << destinationIp << " (Protocol: " << protocol << ")" << std::endl;
+    // Simulate routing logic based on source, destination, and protocol
+    if (protocol == "TCP") {
+        std::cout << "  -> Using TCP routing rules" << std::endl;
+        if (destinationIp.substr(0, 3) == "10.")
+        {
+            std::cout << "   -> Forwarding to private network" << std::endl;
+        }
+        else
+        {
+            std::cout << "   -> Forwarding to external network" << std::endl;
+        }
+    } else if (protocol == "UDP") {
+        std::cout << "  -> Using UDP routing rules" << std::endl;
+        if (destinationIp.substr(0, 3) == "192")
+        {
+            std::cout << "   -> Forwarding to local network" << std::endl;
+        }
+        else
+        {
+            std::cout << "   -> Forwarding to external network" << std::endl;
+        }
+    } else {
+        std::cout << "  -> Unknown protocol, using default routing" << std::endl;
+        std::cout << "   -> Forwarding to default gateway" << std::endl;
+    }
+}
+
+
+
+int main() {
+     // Test cases
+    std::cout << "--- Test Case 1: Integer IP ---" << std::endl;
+    routePacket(1500);
+    std::cout << std::endl;
+
+    std::cout << "--- Test Case 2: String IP ---" << std::endl;
+    routePacket("192.168.1.1");
+    std::cout << std::endl;
+
+    std::cout << "--- Test Case 3: String IP ---" << std::endl;
+    routePacket("10.0.0.1");
+    std::cout << std::endl;
+
+    std::cout << "--- Test Case 4: Source and Destination IPs ---" << std::endl;
+    routePacket("192.168.1.10", "192.168.1.20");
+    std::cout << std::endl;
+
+    std::cout << "--- Test Case 5: Source and Destination IPs ---" << std::endl;
+    routePacket("192.168.1.10", "8.8.8.8");
+    std::cout << std::endl;
+
+    std::cout << "--- Test Case 6: Source, Destination, and Protocol ---" << std::endl;
+    routePacket("192.168.1.10", "10.0.0.5", "TCP");
+    std::cout << std::endl;
+
+    std::cout << "--- Test Case 7: Source, Destination, and Protocol ---" << std::endl;
+    routePacket("192.168.1.10", "8.8.8.8", "UDP");
+    std::cout << std::endl;
+    
+    std::cout << "--- Test Case 8: Source, Destination, and Protocol ---" << std::endl;
+    routePacket("192.168.1.10", "8.8.8.8", "ICMP");
+    std::cout << std::endl;
+
+
+    return 0;
+}
+
+
+TP2 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <map>
+
+using namespace std;
+
+// Function to assign a player by name and position
+void assignPosition(const string& playerName, const string& position) {
+    cout << playerName << " is playing as " << position << "." << endl;
+}
+
+// Function to assign a player by jersey number and position
+void assignPosition(int jerseyNumber, const string& position) {
+    cout << "Player #" << jerseyNumber << " is playing as " << position << "." << endl;
+}
+
+// Function to assign a player by name, jersey number, and position
+void assignPosition(const string& playerName, int jerseyNumber, const string& position) {
+    cout << playerName << " (Jersey #" << jerseyNumber << ") is playing as " << position << "." << endl;
+}
+
+// Function to assign a player with a specific team side
+void assignPosition(const string& playerName, int jerseyNumber, const string& position, const string& side) {
+    cout << playerName << " (Jersey #" << jerseyNumber << ") is playing as " << position << " on the " << side << " side." << endl;
+}
+
+// Function to assign a captain
+void assignCaptain(const string& playerName, int jerseyNumber, const string& position) {
+    cout << playerName << " (Jersey #" << jerseyNumber << ") is playing as " << position << " (Captain)." << endl;
+}
+
+// Function to assign a substitute
+void assignSubstitute(const string& playerName, int jerseyNumber, const string& position) {
+    cout << playerName << " (Jersey #" << jerseyNumber << ") is playing as " << position << " (Substitute)." << endl;
+}
+
+// Function to get a random position
+string getRandomPosition() {
+    vector<string> positions = {"Attacker", "Midfielder", "Defender", "Goalkeeper", "Winger", "Striker", "Sweeper"};
+    int randomIndex = rand() % positions.size();
+    return positions[randomIndex];
+}
+
+// Function to assign random positions to players
+void assignRandomPositions(map<string, int>& players) {
+    cout << "Random Player Assignments:" << endl;
+    for (auto const& [playerName, jerseyNumber] : players) {
+        assignPosition(playerName, jerseyNumber, getRandomPosition());
+    }
+}
+
+// Function to display team formation
+void displayTeamFormation(int defenders, int midfielders, int attackers) {
+    cout << "Team is playing in a " << defenders << "-" << midfielders << "-" << attackers << " formation." << endl;
+}
+
+int main() {
+    // Seed for random number generation
+    srand(time(0));
+
+    // Demonstrate overloaded functions
+    cout << "--- Player Assignments ---" << endl;
+    assignPosition("Ronaldo", "Attacker");
+    assignPosition(10, "Midfielder");
+    assignPosition("Messi", 30, "Midfielder");
+    assignPosition("Van Dijk", 4, "Defender", "left");
+    assignPosition("Alisson", 1, "Goalkeeper");
+    assignCaptain("Kane", 9, "Striker");
+    assignSubstitute("Hazard", 7, "Winger");
+    cout << endl;
+
+    // Display team formation
+    displayTeamFormation(4, 4, 2);
+    cout << endl;
+
+    // Demonstrate random player assignments
+    map<string, int> randomPlayers = {
+        {"De Bruyne", 17},
+        {"Mbappe", 7},
+        {"Salah", 11}
+    };
+    assignRandomPositions(randomPlayers);
+    cout << endl;
+
+    // Demonstrate user input for player assignment
+    string playerName, position;
+    int jerseyNumber;
+
+    cout << "--- User Input ---" << endl;
+    cout << "Enter player name: ";
+    cin >> playerName;
+    cout << "Enter player number: ";
+    cin >> jerseyNumber;
+    cout << "Enter position: ";
+    cin >> position;
+
+    assignPosition(playerName, jerseyNumber, position);
+    cout << endl;
+
+    return 0;
+}
+
+TP3:
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+
+
+using namespace std;
+
+// Function to create a basic car with brand and model
+void manufactureCar(const string& brand, const string& model) {
+    cout << "Manufacturing Car: " << brand << " " << model << endl;
+}
+
+// Function to create a car with brand, model, and engine type
+void manufactureCar(const string& brand, const string& model, const string& engineType) {
+    cout << "Manufacturing Car: " << brand << " " << model << " with " << engineType << " engine." << endl;
+}
+
+// Function to create a car with brand, model, engine type, and transmission type
+void manufactureCar(const string& brand, const string& model, const string& engineType, const string& transmissionType) {
+    cout << "Manufacturing Car: " << brand << " " << model << " with " << engineType << " engine and " << transmissionType << " transmission." << endl;
+}
+
+// Function to create a car with brand, model, engine type, transmission type, and custom features
+void manufactureCar(const string& brand, const string& model, const string& engineType, const string& transmissionType, const string& color, int doors, int seating) {
+    cout << "Manufacturing Car: " << brand << " " << model << " with " << engineType << " engine, " << transmissionType << " transmission, "
+         << color << " color, " << doors << " doors, and seating for " << seating << " people." << endl;
+}
+
+// Function to estimate the price of a car based on its features
+int estimatePrice(const string& engineType, const string& transmissionType, const string& color = "", int doors = 0, int seating = 0, int basePrice = 0) {
+    int price = basePrice;
+
+    if (engineType == "Electric") {
+        price += 15000;
+    } else if (engineType == "Hybrid") {
+        price += 8000;
+    } else if (engineType == "Diesel") {
+        price += 5000;
+    }
+
+    if (transmissionType == "Automatic") {
+        price += 3000;
+    }
+
+    if (color != "") {
+        price += 1000; // Premium for custom color
+    }
+
+    if (doors > 4) {
+        price += 500;
+    }
+    if (seating > 5) {
+        price += 1000;
+    }
+
+    return price;
+}
+
+// Function to generate a random car
+void generateRandomCar() {
+    vector<string> brands = {"Toyota", "Ford", "Honda", "BMW", "Mercedes"};
+    vector<string> models = {"F-150", "Camry", "Civic", "X5", "E-Class"};
+    vector<string> engineTypes = {"Petrol", "Diesel", "Electric", "Hybrid"};
+    vector<string> transmissionTypes = {"Manual", "Automatic"};
+    vector<string> colors = {"Red", "Blue", "Black", "White", "Silver"};
+    vector<int> doorsOptions = {4, 5};
+    vector<int> seatingOptions = {4, 5, 7};
+
+    string brand = brands[rand() % brands.size()];
+    string model = models[rand() % models.size()];
+    string engineType = engineTypes[rand() % engineTypes.size()];
+    string transmissionType = transmissionTypes[rand() % transmissionTypes.size()];
+    string color = colors[rand() % colors.size()];
+    int doors = doorsOptions[rand() % doorsOptions.size()];
+    int seating = seatingOptions[rand() % seatingOptions.size()];
+    int basePrice = rand() % 20000 + 10000;
+
+    cout << "Randomly Generated Car:" << endl;
+    manufactureCar(brand, model, engineType, transmissionType, color, doors, seating);
+    cout << "Estimated Price: $" << estimatePrice(engineType, transmissionType, color, doors, seating, basePrice) << endl;
+}
+
+int main() {
+    // Seed for random number generation
+    srand(time(0));
+
+    // Demonstrate car manufacturing with different specifications
+    manufactureCar("Tesla", "Model S");
+    manufactureCar("Toyota", "Camry", "Hybrid");
+    manufactureCar("Ford", "F-150", "Diesel", "Automatic");
+    manufactureCar("BMW", "X5", "Petrol", "Manual", "Black", 5, 5);
+    manufactureCar("Mercedes", "E-Class", "Electric", "Automatic", "White", 4, 5);
+    cout << "Estimated Price: $" << estimatePrice("Electric", "Automatic", "White", 4, 5, 40000) << endl;
+    cout << endl;
+
+    // Generate a random car
+    generateRandomCar();
+    cout << endl;
+
+    // User input for car customization
+    string brand, model, engineType, transmissionType, color;
+    int doors, seating, basePrice;
+    vector<string> validEngineTypes = {"Petrol", "Diesel", "Electric", "Hybrid"};
+    vector<string> validTransmissionTypes = {"Manual", "Automatic"};
+
+    cout << "--- User Input ---" << endl;
+    cout << "Enter Car Brand: ";
+    cin >> brand;
+    cout << "Enter Car Model: ";
+    cin >> model;
+      // Validate Engine Type
+    while (true) {
+        cout << "Enter Engine Type (Petrol/Diesel/Electric/Hybrid): ";
+        cin >> engineType;
+        if (find(validEngineTypes.begin(), validEngineTypes.end(), engineType) != validEngineTypes.end()) {
+            break;
+        } else {
+            cout << "Invalid engine type. Please choose from Petrol, Diesel, Electric, or Hybrid." << endl;
+        }
+    }
+
+    // Validate Transmission Type
+    while (true) {
+        cout << "Enter Transmission (Manual/Automatic): ";
+        cin >> transmissionType;
+        if (find(validTransmissionTypes.begin(), validTransmissionTypes.end(), transmissionType) != validTransmissionTypes.end()) {
+            break;
+        } else {
+            cout << "Invalid transmission type. Please choose from Manual or Automatic." << endl;
+        }
+    }
+
+    cout << "Enter Color: ";
+    cin >> color;
+
+    // Validate Number of Doors
+    while (true) {
+        cout << "Enter Number of Doors (2-4): ";
+        cin >> doors;
+        if (doors >= 2 && doors <= 4) {
+            break;
+        } else {
+            cout << "Invalid number of doors. Please enter a value between 2 and 4." << endl;
+        }
+    }
+    cout << "Enter Seating Capacity: ";
+    cin >> seating;
+    cout << "Enter Base Price: $";
+    cin >> basePrice;
+
+    manufactureCar(brand, model, engineType, transmissionType, color, doors, seating);
+    cout << "Estimated Price: $" << estimatePrice(engineType, transmissionType, color, doors, seating, basePrice) << endl;
+
+    return 0;
+}
+
+
+TP4: 
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Function to create a text-only post
+void createPost(const string& text) {
+    cout << "--- Text Post ---" << endl;
+    cout << "Text: " << text << endl;
+    cout << "-----------------" << endl;
+}
+
+// Function to create a text and image post
+void createPost(const string& text, const string& image) {
+    cout << "--- Text and Image Post ---" << endl;
+    cout << "Text: " << text << endl;
+    cout << "Image: " << image << endl;
+    cout << "-------------------------" << endl;
+}
+
+// Function to create a text, image, and hashtags post
+void createPost(const string& text, const string& image, const vector<string>& hashtags) {
+    cout << "--- Text, Image, and Hashtags Post ---" << endl;
+    cout << "Text: " << text << endl;
+    cout << "Image: " << image << endl;
+    cout << "Hashtags: ";
+    if (hashtags.empty())
+    {
+        cout << "No hashtags" << endl;
+    }
+    else
+    {
+        for (const string& hashtag : hashtags) {
+            cout << hashtag << " ";
+        }
+        cout << endl;
+    }
+    
+    cout << "-----------------------------------" << endl;
+}
+
+int main() {
+    // Demonstrate creating different types of posts
+    cout << "--- Creating Posts ---" << endl;
+
+    // Text-only post
+    createPost("Hello, world! This is my first post.");
+
+    // Text and image post
+    createPost("Check out this amazing picture!", "image.jpg");
+
+    // Text, image, and hashtags post
+    vector<string> hashtags1 = {"#travel", "#nature", "#photography"};
+    createPost("Exploring the mountains today!", "mountain_view.png", hashtags1);
+
+    // Text, image, and hashtags post with no hashtags
+    vector<string> hashtags2 = {};
+    createPost("Just a regular day", "daily.png", hashtags2);
+
+    // User input for creating a post
+    int postType;
+    cout << "--- Create Your Own Post ---" << endl;
+    cout << "Choose post type:" << endl;
+    cout << "1. Text-only" << endl;
+    cout << "2. Text and image" << endl;
+    cout << "3. Text, image, and hashtags" << endl;
+    cout << "Enter your choice (1-3): ";
+    cin >> postType;
+
+    cin.ignore(); // Consume the newline character left in the buffer
+
+    string text, image, hashtagInput;
+    vector<string> hashtags;
+
+    if (postType == 1) {
+        cout << "Enter text: ";
+        getline(cin, text);
+        createPost(text);
+    } else if (postType == 2) {
+        cout << "Enter text: ";
+        getline(cin, text);
+        cout << "Enter image name: ";
+        getline(cin, image);
+        createPost(text, image);
+    } else if (postType == 3) {
+        cout << "Enter text: ";
+        getline(cin, text);
+        cout << "Enter image name: ";
+        getline(cin, image);
+        cout << "Enter hashtags (separated by spaces): ";
+        getline(cin, hashtagInput);
+
+        // Parse hashtags from the input string
+        string currentHashtag;
+        for (char c : hashtagInput) {
+            if (c == ' ') {
+                if (!currentHashtag.empty()) {
+                    hashtags.push_back("#" + currentHashtag);
+                    currentHashtag.clear();
+                }
+            } else {
+                currentHashtag += c;
+            }
+        }
+        if (!currentHashtag.empty()) {
+            hashtags.push_back("#" + currentHashtag);
+        }
+
+        createPost(text, image, hashtags);
+    } else {
+        cout << "Invalid post type." << endl;
+    }
+
+    return 0;
+}
